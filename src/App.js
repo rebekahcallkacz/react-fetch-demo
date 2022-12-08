@@ -38,11 +38,10 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <p>Fetch from an API</p>
+        {people?.map((person) => (
+          <div key={person.name}>{person.name}</div>
+        ))}
       </header>
-      {people?.map((person) => (
-        <div key={person.name}>{person.name}</div>
-      ))}
     </div>
   );
 }
