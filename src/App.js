@@ -18,29 +18,41 @@ const loadPeople = async () => {
 };
 
 function App() {
-  // Store people
-  const [people, setPeople] = useState();
+  // Store people and status of fetching people data
+  const [peopleData, setPeopleData] = useState({
+    people: undefined,
+    isLoading: true,
+    isErrored: false,
+  });
+  const { people, isLoading, isErrored } = peopleData;
 
   useEffect(() => {
     // If people is undefined or null, call load people to get them from the API
     if (!people) {
       loadPeople()
         // Once the promise is resolved, set people equal to the data response
-        .then((data) => setPeople(data))
-        // If there's an error and it isn't successfully resolved, print that error
-        .catch((error) => console.log(error.message));
+        .then((data) =>
+          setPeopleData({ people: data, isLoading: false, isErrored: false })
+        )
+        // If there's an error and it isn't successfully resolved, store that
+        .catch((error) =>
+          setPeopleData({ people: null, isLoading: false, isErrored: true })
+        );
     }
   }, [people]);
 
-  // console.log(people)
-  // If people is not null or undefined, iterate through and display the individual's names
-  // You might need to scroll down to see these show up :)
+  // console.log(people);
+  // If people is not loading or errored, iterate through and display the individual's names
   return (
     <div className="App">
       <header className="App-header">
-        {people?.map((person) => (
-          <div key={person.name}>{person.name}</div>
-        ))}
+        {isLoading ? (
+          <div>Loading...</div>
+        ) : isErrored ? (
+          <div>ERROR!</div>
+        ) : (
+          people.map((person) => <div key={person.name}>{person.name}</div>)
+        )}
       </header>
     </div>
   );
