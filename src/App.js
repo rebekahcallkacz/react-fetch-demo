@@ -24,6 +24,7 @@ function App() {
     isLoading: true,
     isErrored: false,
   });
+  const [selectedPerson, setSelectedPerson] = useState();
   const { people, isLoading, isErrored } = peopleData;
 
   useEffect(() => {
@@ -41,7 +42,12 @@ function App() {
     }
   }, [people]);
 
-  // console.log(people);
+  const handleClick = (name) => {
+    const clickedPerson = people.find((person) => person.name === name);
+    setSelectedPerson(clickedPerson);
+  };
+  // console.log("selected person", selectedPerson);
+  // console.log("people", people);
   // If people is not loading or errored, iterate through and display the individual's names
   return (
     <div className="App">
@@ -51,7 +57,18 @@ function App() {
         ) : isErrored ? (
           <div>ERROR!</div>
         ) : (
-          people.map((person) => <div key={person.name}>{person.name}</div>)
+          people.map((person) => (
+            <button
+              key={person.name}
+              onClick={(event) => handleClick(event.target.value)}
+              value={person.name}
+            >
+              {person.name}
+            </button>
+          ))
+        )}
+        {selectedPerson && (
+          <div>{`${selectedPerson.name}'s Mass: ${selectedPerson.mass}`}</div>
         )}
       </header>
     </div>
