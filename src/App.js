@@ -3,9 +3,6 @@ import "./App.css";
 import Button from "./Button";
 import { loadPeople } from "./utils.js";
 
-// Requirements
-// When you click on a person's name - display what planet they live on
-
 function App() {
   // Store people and status of fetching people data
   const [peopleData, setPeopleData] = useState({
