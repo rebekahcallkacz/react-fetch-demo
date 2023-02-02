@@ -77,27 +77,31 @@ function App() {
   // If people successfully loads, iterate through and display the individual's names
   return (
     <div className="App">
-      <div className="App-content">
-        {isLoading ? (
-          <div>Loading...</div>
-        ) : isErrored ? (
-          <div>ERROR!</div>
-        ) : (
-          people.map((person) => (
-            <Button
-              onClick={handleClick}
-              value={person.name}
-              children={person.name}
-              key={person.name}
-            />
-          ))
-        )}
-        {selectedPerson && (
-          <>
-            <div>{`${selectedPerson.name} lives on the planet`}</div>
-            {selectedPlanet && <div>{`${selectedPlanet.name}`}</div>}
-          </>
-        )}
+      <div className="App-body">
+        <div className="App-column">
+          {isLoading ? (
+            <div>Loading...</div>
+          ) : isErrored ? (
+            <div>ERROR!</div>
+          ) : (
+            people.map((person) => (
+              <Button
+                onClick={handleClick}
+                value={person.name}
+                children={person.name}
+                key={person.name}
+              />
+            ))
+          )}
+        </div>
+        <div className="App-column">
+          {selectedPerson && (
+            <>
+              <div>{`${selectedPerson.name} lives on the planet`}</div>
+              {selectedPlanet && <div>{`${selectedPlanet.name}`}</div>}
+            </>
+          )}
+        </div>
       </div>
     </div>
   );
