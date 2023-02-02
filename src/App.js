@@ -77,7 +77,7 @@ function App() {
   // If people successfully loads, iterate through and display the individual's names
   return (
     <div className="App">
-      <header className="App-header">
+      <div className="App-content">
         {isLoading ? (
           <div>Loading...</div>
         ) : isErrored ? (
@@ -92,14 +92,13 @@ function App() {
             />
           ))
         )}
-        <hr></hr>
         {selectedPerson && (
           <>
             <div>{`${selectedPerson.name} lives on the planet`}</div>
             {selectedPlanet && <div>{`${selectedPlanet.name}`}</div>}
           </>
         )}
-      </header>
+      </div>
     </div>
   );
 }
