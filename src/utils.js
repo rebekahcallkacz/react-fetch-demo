@@ -1,4 +1,5 @@
 export const loadPeople = async () => {
+  console.log("This is fetching the data");
   // Get the response
   const response = await fetch(`https://swapi.dev/api/people`, {
     // This tells the API that you want your data in JSON format
