@@ -32,7 +32,7 @@ function App() {
   const [selectedPerson, setSelectedPerson] = useState();
   const [selectedPlanet, setSelectedPlanet] = useState();
   const { people, isLoading, isErrored } = peopleData;
-  console.log(people);
+
   useEffect(() => {
     // If people is undefined or null, call loadPeople to get them from the API
     if (!people) {
@@ -49,16 +49,32 @@ function App() {
   }, [people]);
 
   const handleClick = (name) => {
-    const selectedPerson = people.find((person) => person.name === name);
-    loadPlanet(selectedPerson.homeworld)
-      .then((data) => {
-        console.log("This is the planet data", data);
-        setSelectedPlanet(data);
-      })
-      .catch((error) => console.log("This failed to fetch a planet"));
-    console.log(selectedPerson);
+    // Clear out the previously selected planet
+    setSelectedPlanet(undefined);
+    // Find the selected person and the associated planet url
+    const clickedPerson = people.find((person) => person.name === name);
+    const planetUrl = clickedPerson.homeworld;
+    setSelectedPerson(clickedPerson);
+    // If we've already fetched the planet, pull that data from local state
+    if (planets.hasOwnProperty(planetUrl)) {
+      console.log("you already fetched this - get it from local state");
+      setSelectedPlanet(planets[planetUrl]);
+      // If we haven't fetched the planet already, do so, store as the selected planet and also store in planets
+    } else {
+      console.log("you don't have this planet - fetch it!");
+      loadPlanet(planetUrl)
+        .then((data) => {
+          const newPlanets = { ...planets };
+          newPlanets[planetUrl] = data;
+          setPlanets(newPlanets);
+          setSelectedPlanet(data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
   };
-  console.log(people);
+
   // If people successfully loads, iterate through and display the individual's names
   return (
     <div className="App">
