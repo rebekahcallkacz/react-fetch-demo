@@ -1,14 +1,15 @@
 import { React } from "react";
+import { createButtonLabel } from "./utils";
 import "./Button.css";
 
-function Button({ children, value, onClick }) {
+function Button({ person, value, onClick }) {
   return (
     <button
-      class="Button"
+      className="Button"
       onClick={(event) => onClick(event.target.value)}
       value={value}
     >
-      {children}
+      {createButtonLabel(person)}
     </button>
   );
 }

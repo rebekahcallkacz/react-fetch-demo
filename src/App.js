@@ -58,12 +58,13 @@ function App() {
       .catch((error) => console.log("This failed to fetch a planet"));
     console.log(selectedPerson);
   };
-  console.log(selectedPlanet);
+  console.log(people);
   // If people successfully loads, iterate through and display the individual's names
   return (
     <div className="App">
       <div className="App-body">
         <div className="App-column">
+          <div>Star Wars Characters</div>
           {isLoading ? (
             <div>Loading...</div>
           ) : isErrored ? (
@@ -73,7 +74,7 @@ function App() {
               <Button
                 onClick={handleClick}
                 value={person.name}
-                children={person.name}
+                person={person}
                 key={person.name}
               />
             ))

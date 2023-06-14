@@ -14,3 +14,9 @@ export const loadPeople = async () => {
   // If there's not data, return an empty array
   return [];
 };
+
+export function createButtonLabel(person) {
+  return `${person.name ?? "unknown"} | ${person.gender ?? "unknown"} | ${
+    person.mass ?? "unknown"
+  }`;
+}
